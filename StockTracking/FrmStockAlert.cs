@@ -30,7 +30,15 @@ namespace StockTracking
 
         private void FrmStockAlert_Load(object sender, EventArgs e)
         {
-            
+            dto = bll.Select();
+            dto.Products = dto.Products.Where(x => x.StockAmount <= 10).ToList();
+            dataGridView1.DataSource = dto.Products;
+            dataGridView1.Columns[0].HeaderText = "Product Name";
+            dataGridView1.Columns[1].HeaderText = "Category Name";
+            dataGridView1.Columns[2].HeaderText = "Stock Amount";
+            dataGridView1.Columns[3].HeaderText = "Price";
+            dataGridView1.Columns[4].Visible = false;
+            dataGridView1.Columns[5].Visible = false;
         }
     }
 }
