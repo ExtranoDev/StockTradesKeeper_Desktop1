@@ -33,7 +33,7 @@ namespace StockTracking
             frm.ShowDialog();
             this.Visible = true;
             dto = bll.Select();
-            dataGridView1.DataSource = dto;
+            dataGridView1.DataSource = dto.Customers;
         }
 
         private void FrmCustomerList_Load(object sender, EventArgs e)
