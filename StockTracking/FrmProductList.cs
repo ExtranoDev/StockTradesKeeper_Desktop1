@@ -72,7 +72,7 @@ namespace StockTracking
                 list = list.Where(x => x.ProductName.Contains(txtProductName.Text)).ToList();
             if (cmbCategory.SelectedIndex != -1)
                 list = list.Where(x => x.CategoryID == Convert.ToInt32(cmbCategory.SelectedIndex)).ToList();
-            if (txtPrice.Text.Trim() != null)
+            if (txtPrice.Text.Trim() != "")
             {
                 if (rbProductEqual.Checked)
                     list = list.Where(x => x.Price == Convert.ToInt32(txtPrice.Text)).ToList();
@@ -83,7 +83,7 @@ namespace StockTracking
                 else
                     MessageBox.Show("Please select a criteria from price group");
             }
-            if (txtStock.Text.Trim() != null)
+            if (txtStock.Text.Trim() != "")
             {
                 if (rbStockEqual.Checked)
                     list = list.Where(x => x.Price == Convert.ToInt32(txtPrice.Text)).ToList();

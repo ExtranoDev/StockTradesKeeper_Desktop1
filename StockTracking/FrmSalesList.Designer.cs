@@ -41,9 +41,9 @@
             this.txtSalesAmount = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.rbProductLess = new System.Windows.Forms.RadioButton();
-            this.rbProductMore = new System.Windows.Forms.RadioButton();
-            this.rbProductEqual = new System.Windows.Forms.RadioButton();
+            this.rbPriceLess = new System.Windows.Forms.RadioButton();
+            this.rbPriceMore = new System.Windows.Forms.RadioButton();
+            this.rbPriceEquals = new System.Windows.Forms.RadioButton();
             this.txtPrice = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.cmbCategory = new System.Windows.Forms.ComboBox();
@@ -103,6 +103,7 @@
             this.btnClean.TabIndex = 10;
             this.btnClean.Text = "Clean";
             this.btnClean.UseVisualStyleBackColor = true;
+            this.btnClean.Click += new System.EventHandler(this.btnClean_Click);
             // 
             // btnSearch
             // 
@@ -113,6 +114,7 @@
             this.btnSearch.TabIndex = 9;
             this.btnSearch.Text = "Search";
             this.btnSearch.UseVisualStyleBackColor = true;
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
             // chDate
             // 
@@ -207,9 +209,9 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.rbProductLess);
-            this.groupBox1.Controls.Add(this.rbProductMore);
-            this.groupBox1.Controls.Add(this.rbProductEqual);
+            this.groupBox1.Controls.Add(this.rbPriceLess);
+            this.groupBox1.Controls.Add(this.rbPriceMore);
+            this.groupBox1.Controls.Add(this.rbPriceEquals);
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.Location = new System.Drawing.Point(595, 7);
             this.groupBox1.Name = "groupBox1";
@@ -218,38 +220,38 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Price";
             // 
-            // rbProductLess
+            // rbPriceLess
             // 
-            this.rbProductLess.AutoSize = true;
-            this.rbProductLess.Location = new System.Drawing.Point(143, 17);
-            this.rbProductLess.Name = "rbProductLess";
-            this.rbProductLess.Size = new System.Drawing.Size(56, 21);
-            this.rbProductLess.TabIndex = 2;
-            this.rbProductLess.TabStop = true;
-            this.rbProductLess.Text = "Less";
-            this.rbProductLess.UseVisualStyleBackColor = true;
+            this.rbPriceLess.AutoSize = true;
+            this.rbPriceLess.Location = new System.Drawing.Point(143, 17);
+            this.rbPriceLess.Name = "rbPriceLess";
+            this.rbPriceLess.Size = new System.Drawing.Size(56, 21);
+            this.rbPriceLess.TabIndex = 2;
+            this.rbPriceLess.TabStop = true;
+            this.rbPriceLess.Text = "Less";
+            this.rbPriceLess.UseVisualStyleBackColor = true;
             // 
-            // rbProductMore
+            // rbPriceMore
             // 
-            this.rbProductMore.AutoSize = true;
-            this.rbProductMore.Location = new System.Drawing.Point(75, 17);
-            this.rbProductMore.Name = "rbProductMore";
-            this.rbProductMore.Size = new System.Drawing.Size(58, 21);
-            this.rbProductMore.TabIndex = 1;
-            this.rbProductMore.TabStop = true;
-            this.rbProductMore.Text = "More";
-            this.rbProductMore.UseVisualStyleBackColor = true;
+            this.rbPriceMore.AutoSize = true;
+            this.rbPriceMore.Location = new System.Drawing.Point(75, 17);
+            this.rbPriceMore.Name = "rbPriceMore";
+            this.rbPriceMore.Size = new System.Drawing.Size(58, 21);
+            this.rbPriceMore.TabIndex = 1;
+            this.rbPriceMore.TabStop = true;
+            this.rbPriceMore.Text = "More";
+            this.rbPriceMore.UseVisualStyleBackColor = true;
             // 
-            // rbProductEqual
+            // rbPriceEquals
             // 
-            this.rbProductEqual.AutoSize = true;
-            this.rbProductEqual.Location = new System.Drawing.Point(7, 17);
-            this.rbProductEqual.Name = "rbProductEqual";
-            this.rbProductEqual.Size = new System.Drawing.Size(62, 21);
-            this.rbProductEqual.TabIndex = 0;
-            this.rbProductEqual.TabStop = true;
-            this.rbProductEqual.Text = "Equal";
-            this.rbProductEqual.UseVisualStyleBackColor = true;
+            this.rbPriceEquals.AutoSize = true;
+            this.rbPriceEquals.Location = new System.Drawing.Point(7, 17);
+            this.rbPriceEquals.Name = "rbPriceEquals";
+            this.rbPriceEquals.Size = new System.Drawing.Size(62, 21);
+            this.rbPriceEquals.TabIndex = 0;
+            this.rbPriceEquals.TabStop = true;
+            this.rbPriceEquals.Text = "Equal";
+            this.rbPriceEquals.UseVisualStyleBackColor = true;
             // 
             // txtPrice
             // 
@@ -450,9 +452,9 @@
         private System.Windows.Forms.ComboBox cmbCategory;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.RadioButton rbProductLess;
-        private System.Windows.Forms.RadioButton rbProductMore;
-        private System.Windows.Forms.RadioButton rbProductEqual;
+        private System.Windows.Forms.RadioButton rbPriceLess;
+        private System.Windows.Forms.RadioButton rbPriceMore;
+        private System.Windows.Forms.RadioButton rbPriceEquals;
         private System.Windows.Forms.TextBox txtPrice;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.GroupBox groupBox2;

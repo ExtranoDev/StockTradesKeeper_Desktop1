@@ -33,6 +33,10 @@ namespace StockTracking
             this.Hide();
             frm.ShowDialog();
             this.Visible = true;
+
+            dto = bll.Select();
+            dataGridView1.DataSource = dto.Sales;
+            CleanFilters();
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -59,6 +63,66 @@ namespace StockTracking
             cmbCategory.DisplayMember = "CategoryName";
             cmbCategory.ValueMember = "ID";
             cmbCategory.SelectedIndex = -1;
+        }
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            List<SalesDetailDTO> list = dto.Sales;
+            if (txtProductName.Text.Trim() != "")
+                list = list.Where(x => x.ProductName.Contains(txtProductName.Text)).ToList();
+            if (txtCustomerName.Text.Trim() != "")
+                list = list.Where(x => x.CustomerName.Contains(txtCustomerName.Text)).ToList();
+            if (cmbCategory.SelectedIndex != -1)
+                list = list.Where(x => x.CategoryID == Convert.ToInt32(cmbCategory.SelectedValue)).ToList();
+            if (txtPrice.Text.Trim() != "")
+            {
+                if (rbPriceEquals.Checked)
+                    list = list.Where(x => x.Price == Convert.ToInt32(txtPrice.Text)).ToList();
+                else if (rbPriceMore.Checked)
+                    list = list.Where(x => x.Price > Convert.ToInt32(txtPrice.Text)).ToList();
+                else if (rbPriceLess.Checked)
+                    list = list.Where(x => x.Price < Convert.ToInt32(txtPrice.Text)).ToList();
+                else
+                    MessageBox.Show("Please select a criteria from price group");
+            }
+            if (txtSalesAmount.Text.Trim() != "")
+            {
+                if (rbSalesEqual.Checked)
+                    list = list.Where(x => x.SalesAmount == Convert.ToInt32(txtSalesAmount.Text)).ToList();
+                else if (rbSalesMore.Checked)
+                    list = list.Where(x => x.SalesAmount > Convert.ToInt32(txtSalesAmount.Text)).ToList();
+                else if (rbSalesLess.Checked)
+                    list = list.Where(x => x.SalesAmount < Convert.ToInt32(txtSalesAmount.Text)).ToList();
+                else
+                    MessageBox.Show("Please select a criteria from Sale amount group");
+            }
+            if (chDate.Checked)
+                list = list.Where(x => x.SalesDate > dpStart.Value && x.SalesDate < dpEnd.Value).ToList();
+            dataGridView1.DataSource = list;
+        }
+
+        private void btnClean_Click(object sender, EventArgs e)
+        {
+            CleanFilters();
+        }
+
+        private void CleanFilters()
+        {
+            txtPrice.Clear();
+            txtCustomerName.Clear();
+            txtProductName.Clear();
+            txtSalesAmount.Clear();
+            rbPriceEquals.Checked = false;
+            rbPriceMore.Checked = false;
+            rbPriceLess.Checked = false;
+            rbSalesEqual.Checked = false;
+            rbSalesMore.Checked = false;
+            rbSalesLess.Checked = false;
+            dpStart.Value = DateTime.Today;
+            dpEnd.Value = DateTime.Today;
+            chDate.Checked = false;
+            cmbCategory.SelectedIndex = -1;
+            dataGridView1.DataSource = dto.Sales;
         }
     }
 }
