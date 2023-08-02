@@ -1,4 +1,6 @@
-﻿using System;
+﻿using StockTracking.BLL;
+using StockTracking.DAL.DTO;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,6 +14,8 @@ namespace StockTracking
 {
     public partial class FrmSalesList : Form
     {
+        SalesBLL bll = new SalesBLL();
+        SalesDTO dto = new SalesDTO();
         public FrmSalesList()
         {
             InitializeComponent();
@@ -25,6 +29,7 @@ namespace StockTracking
         private void btnAdd_Click(object sender, EventArgs e)
         {
             FrmSales frm = new FrmSales();
+            frm.dto = dto;
             this.Hide();
             frm.ShowDialog();
             this.Visible = true;
@@ -33,7 +38,11 @@ namespace StockTracking
         private void btnClose_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
 
+        private void FrmSalesList_Load(object sender, EventArgs e)
+        {
+            dto = bll.Select();
         }
     }
 }
