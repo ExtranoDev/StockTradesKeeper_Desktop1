@@ -49,7 +49,7 @@ namespace StockTracking.BLL
             dto.Products = productDAO.Select();
             dto.Customers = customerDAO.Select();
             dto.Categories = categoryDAO.Select();
-            //dto.Sales = dao.Select();
+            dto.Sales = dao.Select();
             return dto;
         }
 

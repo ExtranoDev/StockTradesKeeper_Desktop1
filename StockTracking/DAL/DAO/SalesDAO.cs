@@ -36,7 +36,49 @@ namespace StockTracking.DAL.DAO
 
         public List<SalesDetailDTO> Select()
         {
-            throw new NotImplementedException();
+            try
+            {
+                List<SalesDetailDTO> sales = new List<SalesDetailDTO>();
+                var list = (from s in db.SALES
+                            join p in db.PRODUCTs on s.ProductID equals p.ID
+                            join c in db.CUSTOMERs on s.CustomerID equals c.ID
+                            join category in db.CATEGORies on s.CategoryID equals category.ID
+                            select new
+                            {
+                                productname = p.ProductName,
+                                customername = c.CustomerName,
+                                categoryname = category.CategoryName,
+                                productID = s.ProductID,
+                                customerID = s.CustomerID,
+                                salesID = s.ID,
+                                categoryID = s.CategoryID,
+                                salesprice = s.ProductSalesPrice,
+                                salesamount = s.ProductSalesAmount,
+                                salesdate = s.SalesDate
+                            }).OrderBy(x => x.salesdate).ToList();
+                foreach (var item in list)
+                {
+                    SalesDetailDTO dto = new SalesDetailDTO();
+                    dto.ProductName = item.productname;
+                    dto.CustomerName = item.customername;
+                    dto.CategoryName = item.categoryname;
+                    dto.ProductID = item.productID;
+                    dto.CustomerID = item.customerID;
+                    dto.SalesID = item.salesID;
+                    dto.CategoryID = item.categoryID;
+                    dto.SalesID = item.salesID;
+                    dto.Price = item.salesprice;
+                    dto.SalesAmount = item.salesamount;
+                    dto.SalesDate = item.salesdate;
+                    sales.Add(dto);
+                }
+                return sales;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
         public bool Update(SALE entity)
