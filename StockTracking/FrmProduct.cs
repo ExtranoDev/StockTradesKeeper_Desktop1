@@ -16,6 +16,8 @@ namespace StockTracking
     {
         public ProductDTO dto = new ProductDTO();
         ProductBLL bll = new ProductBLL();
+        public ProductDetailDTO detail = new ProductDetailDTO();
+        public bool isUpdate = false;
         public FrmProduct()
         {
             InitializeComponent();
@@ -37,6 +39,12 @@ namespace StockTracking
             cmbCategory.DisplayMember = "CategoryName";
             cmbCategory.ValueMember = "ID";
             cmbCategory.SelectedIndex = -1;
+            if (isUpdate)
+            {
+                txtProductName.Text = detail.ProductName;
+                txtPrice.Text = detail.Price.ToString();
+                cmbCategory.SelectedValue = detail.CategoryID;
+            }
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -49,17 +57,38 @@ namespace StockTracking
                 MessageBox.Show("Price is empty");
             else
             {
-                ProductDetailDTO product = new ProductDetailDTO();
-                product.ProductName = txtProductName.Text;
-                product.CategoryID = Convert.ToInt32(cmbCategory.SelectedValue);
-                product.Price = Convert.ToInt32(txtPrice.Text);
-
-                if (bll.Insert(product))
+                if (!isUpdate)
                 {
-                    MessageBox.Show("Product was added");
-                    txtPrice.Clear();
-                    txtProductName.Clear();
-                    cmbCategory.SelectedIndex = -1;
+                    ProductDetailDTO product = new ProductDetailDTO();
+                    product.ProductName = txtProductName.Text;
+                    product.CategoryID = Convert.ToInt32(cmbCategory.SelectedValue);
+                    product.Price = Convert.ToInt32(txtPrice.Text);
+
+                    if (bll.Insert(product))
+                    {
+                        MessageBox.Show("Product was added");
+                        txtPrice.Clear();
+                        txtProductName.Clear();
+                        cmbCategory.SelectedIndex = -1;
+                    }
+                }
+                else
+                {
+                    if (detail.ProductName == txtProductName.Text &&
+                        detail.CategoryID == Convert.ToInt32(cmbCategory.SelectedValue) &&
+                        detail.Price == Convert.ToInt32(txtPrice.Text))
+                        MessageBox.Show("No Change made");
+                    else
+                    {
+                        detail.ProductName = txtProductName.Text;
+                        detail.CategoryID = Convert.ToInt32(cmbCategory.SelectedValue);
+                        detail.Price = Convert.ToInt32(txtPrice.Text);
+                        if (bll.Update(detail))
+                        {
+                            MessageBox.Show("Product was Updated");
+                            this.Close();
+                        }
+                    }
                 }
             }
         }
