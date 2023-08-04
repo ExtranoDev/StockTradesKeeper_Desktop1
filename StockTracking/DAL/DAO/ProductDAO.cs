@@ -91,7 +91,8 @@ namespace StockTracking.DAL.DAO
                                 stockAmount = p.StockAmount,
                                 price = p.Price,
                                 productID = p.ID,
-                                categoryID = c.ID
+                                categoryID = c.ID,
+                                categoryIsDeleted = c.isDeleted
                             }).OrderBy(x => x.productName).ToList();
 
                 foreach (var item in list)
@@ -103,6 +104,7 @@ namespace StockTracking.DAL.DAO
                     dto.Price = item.price;
                     dto.ProductID = item.productID;
                     dto.CategoryID = item.categoryID;
+                    dto.isCategoryDeleted = item.categoryIsDeleted;
                     products.Add(dto);
                 }
                 return products;

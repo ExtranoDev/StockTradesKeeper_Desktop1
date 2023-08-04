@@ -39,6 +39,7 @@ namespace StockTracking
             dataGridView1.Columns[3].HeaderText = "Price";
             dataGridView1.Columns[4].Visible = false;
             dataGridView1.Columns[5].Visible = false;
+            dataGridView1.Columns[6].Visible = false;
 
             if (dto.Products.Count == 0)
             {

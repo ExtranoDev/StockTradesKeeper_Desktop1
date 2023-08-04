@@ -51,6 +51,9 @@ namespace StockTracking
             dataGridView1.Columns[5].Visible = false;
             dataGridView1.Columns[9].Visible = false;
             dataGridView1.Columns[10].Visible = false;
+            dataGridView1.Columns[11].Visible = false;
+            dataGridView1.Columns[12].Visible = false;
+            dataGridView1.Columns[13].Visible = false;
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -79,6 +82,7 @@ namespace StockTracking
                 productDetail.CategoryID = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells[5].Value);
                 productDetail.ProductName = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();
                 productDetail.Price = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells[3].Value);
+                productDetail.isCategoryDeleted = Convert.ToBoolean(dataGridView1.Rows[e.RowIndex].Cells[6].Value);
             }
             else
             {
@@ -89,6 +93,9 @@ namespace StockTracking
                 salesDetail.ProductName = dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString();
                 salesDetail.Price = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells[7].Value);
                 salesDetail.SalesAmount = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells[6].Value);
+                salesDetail.isCategoryDeleted = Convert.ToBoolean(dataGridView1.Rows[e.RowIndex].Cells[11].Value);
+                salesDetail.isCustomerDeleted = Convert.ToBoolean(dataGridView1.Rows[e.RowIndex].Cells[12].Value);
+                salesDetail.isProductDeleted = Convert.ToBoolean(dataGridView1.Rows[e.RowIndex].Cells[13].Value);
             }
 
         }
@@ -116,6 +123,7 @@ namespace StockTracking
                 dataGridView1.Columns[3].HeaderText = "Price";
                 dataGridView1.Columns[4].Visible = false;
                 dataGridView1.Columns[5].Visible = false;
+                dataGridView1.Columns[6].Visible = false;
             }
             else if (cmbDeletedData.SelectedIndex == 3)
             {
@@ -131,6 +139,9 @@ namespace StockTracking
                 dataGridView1.Columns[5].Visible = false;
                 dataGridView1.Columns[9].Visible = false;
                 dataGridView1.Columns[10].Visible = false;
+                dataGridView1.Columns[11].Visible = false;
+                dataGridView1.Columns[12].Visible = false;
+                dataGridView1.Columns[13].Visible = false;
             }
         }
 
@@ -156,7 +167,9 @@ namespace StockTracking
             }
             else if (cmbDeletedData.SelectedIndex == 2)
             {
-                if (productBLL.GetBack(productDetail))
+                if (productDetail.isCategoryDeleted)
+                    MessageBox.Show("Category was deleted first get back category");
+                else if (productBLL.GetBack(productDetail))
                 {
                     MessageBox.Show("Product details have been restored");
                     dto = bll.Select(true);
@@ -165,7 +178,16 @@ namespace StockTracking
             }
             else
             {
-                if (salesBLL.GetBack(salesDetail))
+                if (salesDetail.isCategoryDeleted || salesDetail.isCustomerDeleted || salesDetail.isProductDeleted)
+                {
+                    if (salesDetail.isCategoryDeleted)
+                        MessageBox.Show("Category was deleted first get back category");
+                    else if (salesDetail.isCustomerDeleted)
+                        MessageBox.Show("Customer was deleted first get back customer");
+                    else if (salesDetail.isProductDeleted)
+                        MessageBox.Show("Product was deleted first get back product");
+                }
+                else if (salesBLL.GetBack(salesDetail))
                 {
                     MessageBox.Show("Sales record have been restored");
                     dto = bll.Select(true);
