@@ -18,8 +18,6 @@ namespace StockTracking.DAL.DAO
                     SALE sales = db.SALES.First(x => x.ID == entity.ID);
                     sales.isDeleted = true;
                     sales.DeletedDate = DateTime.Today;
-                    db.SaveChanges();
-                    return true;
                 }
                 else if (entity.ProductID != 0)
                 {
@@ -29,8 +27,17 @@ namespace StockTracking.DAL.DAO
                         item.isDeleted = true;
                         item.DeletedDate = DateTime.Today;
                     }
-                    db.SaveChanges();
+                } else if (entity.CustomerID != 0)
+                {
+                    List<SALE> sales = db.SALES.Where(x => x.CustomerID == entity.CustomerID).ToList();
+                    foreach (var item in sales)
+                    {
+                        item.isDeleted = true;
+                        item.DeletedDate = DateTime.Today;
+                    }
                 }
+
+                db.SaveChanges();
                 return true;
             }
             catch (Exception)
