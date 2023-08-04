@@ -54,6 +54,7 @@ namespace StockTracking
 
         private void dataGridView1_RowEnter(object sender, DataGridViewCellEventArgs e)
         {
+            detail = new CategoryDetailDTO();
             detail.ID = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells[0].Value);
             detail.CategoryName = dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString();
         }
@@ -74,6 +75,27 @@ namespace StockTracking
                 dto = bll.Select();
                 dataGridView1.DataSource = dto.Categories;
 
+            }
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            if (detail.ID == 0)
+                MessageBox.Show("Please select a category from table");
+            else
+            {
+                DialogResult result = MessageBox.Show("Are you sure", "warning", MessageBoxButtons.YesNo);
+                if (result == DialogResult.Yes)
+                {
+                    if (bll.Delete(detail))
+                    {
+                        MessageBox.Show("Category was deleted");
+                        bll = new CategoryBLL();
+                        dto = bll.Select();
+                        dataGridView1.DataSource = dto.Categories;
+                        txtCategoryName.Clear();
+                    }
+                }
             }
         }
     }

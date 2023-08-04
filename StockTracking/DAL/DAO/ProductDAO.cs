@@ -14,9 +14,28 @@ namespace StockTracking.DAL.DAO
         {
             try
             {
-                PRODUCT product = db.PRODUCTs.First(x => x.ID ==entity.ID);
-                product.isDeleted = true;
-                product.DeletedDate = DateTime.Today;
+                if (entity.ID != 0)
+                {
+                    PRODUCT product = db.PRODUCTs.First(x => x.ID == entity.ID);
+                    product.isDeleted = true;
+                    product.DeletedDate = DateTime.Today;
+                }
+                else if (entity.CategoryID != 0)
+                {
+                    List<PRODUCT> list = db.PRODUCTs.Where(x => x.CategoryID == entity.CategoryID).ToList();
+                    foreach (var item in list)
+                    {
+                        item.isDeleted = true;
+                        item.DeletedDate = DateTime.Today;
+                        List<SALE> sales = db.SALES.Where(x => x.ProductID == item.ID).ToList();
+                        foreach (var item2 in sales)
+                        {
+                            item2.isDeleted = true;
+                            item2.DeletedDate = DateTime.Today;
+                        }
+                        db.SaveChanges();
+                    }
+                }
                 db.SaveChanges();
                 return true;
             }
@@ -29,7 +48,19 @@ namespace StockTracking.DAL.DAO
 
         public bool GetBack(int ID)
         {
-            throw new NotImplementedException();
+            try
+            {
+                PRODUCT product = db.PRODUCTs.First(X => X.ID == ID);
+                product.isDeleted = false;
+                product.DeletedDate = null;
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         public bool Insert(PRODUCT entity)
@@ -46,12 +77,12 @@ namespace StockTracking.DAL.DAO
             }
         }
 
-        public List<ProductDetailDTO> Select()
+        public List<ProductDetailDTO> Select(bool isDeleted = false)
         {
             try
             {
                 List<ProductDetailDTO> products = new List<ProductDetailDTO>();
-                var list = (from p in db.PRODUCTs.Where(x => x.isDeleted == false)
+                var list = (from p in db.PRODUCTs.Where(x => x.isDeleted == isDeleted)
                             join c in db.CATEGORies on p.CategoryID equals c.ID
                             select new
                             {
